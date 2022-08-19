@@ -49,8 +49,24 @@ namespace AirTravelApp.Controllers
             {
                 return NotFound();
             }
+            var bookings = await _context.Passengers.Where(p => p.Bookings.Where(b => b.FlightId == flight.Id).Any()).ToListAsync();
+            var flightDTO = new FlightDetailsDTO
+            {
+                Id = flight.Id,
+                FlightNumber = flight.FlightNumber,
+                DepartureDate = flight.DepartureDate,
+                ArrivalDate = flight.ArrivalDate,
+                DepartureTime = flight.DepartureDate,
+                ArrivalTime = flight.ArrivalTime,
+                DepartureAirport = flight.DepartureAirport,
+                ArrivalAirport = flight.ArrivalAirport,
+                PassengerLimit = flight.PassengerLimit,
 
-            return flight;
+                passengers = bookings
+
+            };
+
+            return Ok(flightDTO);
         }
 
         // PUT: api/Flights/5

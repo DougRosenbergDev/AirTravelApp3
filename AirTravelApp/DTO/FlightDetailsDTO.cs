@@ -1,6 +1,8 @@
-﻿namespace AirTravelApp.Models
+﻿using AirTravelApp.Models;
+
+namespace AirTravelApp.DTO
 {
-    public class Flight
+    public class FlightDetailsDTO
     {
         public int Id { get; set; }
         public int FlightNumber { get; set; }
@@ -11,10 +13,6 @@
         public string DepartureAirport { get; set; }
         public string ArrivalAirport { get; set; }
         public int PassengerLimit { get; set; }
-
-        //Navigation Properties
-        // many-to-many
-        public virtual ICollection<Booking> AppearsOnFlights { get; set; }
-        
+        public List<Passenger> passengers { get; set; }
     }
 }

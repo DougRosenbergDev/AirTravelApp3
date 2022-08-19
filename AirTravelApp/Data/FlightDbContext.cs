@@ -17,54 +17,21 @@ namespace AirTravelApp.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<BookedFlight>()
+            builder.Entity<Booking>()
                 // => big arrow is a Lambda function (anonymous)
                 // represents the entity that is being passed in
-                .HasKey(bf => bf.Id);
+                .HasKey(b => b.Id);
 
-            builder.Entity<BookedFlight>()
-                .HasOne(bf => bf.Booking)
-                .WithMany(b => b.Flights)
-                .HasForeignKey(bf => bf.BookingId);
-               
-            builder.Entity<BookedFlight>()
-                .HasOne(bf => bf.Flight)
-                .WithMany(f => f.AppearsOnFlights)
+            builder.Entity<Booking>()
+                .HasOne(b => b.Flight)
+                .WithMany(b => b.AppearsOnFlights)
                 .HasForeignKey(bf => bf.FlightId);
+               
+            builder.Entity<Booking>()
+                .HasOne(bf => bf.Passenger)
+                .WithMany(f => f.Bookings)
+                .HasForeignKey(bf => bf.PassengerId);
 
-            // define fk for DreamFlight
-            builder.Entity<DreamFlight>()    
-                .HasKey(bf => bf.Id);
-
-            // person to playist relation
-            builder.Entity<DreamFlight>()
-                .HasOne(df => df.Passenger)
-                .WithMany(p => p.DreamFlights)
-                .HasForeignKey(df => df.PassengerId);
-            // do both sides
-            builder.Entity<DreamFlight>()
-                .HasOne(df => df.Booking)
-                .WithMany(b => b.Dreams)
-                .HasForeignKey(df => df.BookingId);
-
-            // define fk for BookedFlight
-            builder.Entity<BookedFlight>()    
-                .HasKey(bf => bf.Id);
-
-            // owned playlist
-            builder.Entity<PurchasedFlight>()
-                .HasOne(pf => pf.Passenger)
-                .WithMany(p => p.PurchasedFlights)
-                .HasForeignKey(pf => pf.PassengerId);
-            // do both sides
-            builder.Entity<PurchasedFlight>()
-                .HasOne(pf => pf.Booking)
-                .WithMany(b => b.Purchasers)
-                .HasForeignKey(pf => pf.BookingId);
-
-            // could be condensed in a different way: 2:30
-            // e.HasKey(ps => ps.Id)
-            // e.HasOne(
         }
     }
 }

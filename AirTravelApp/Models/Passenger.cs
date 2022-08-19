@@ -11,8 +11,7 @@
 
         // Navigation Properties
         // in line 14 is it Bookedflights or PurchasedFlights?
-        public virtual ICollection<PurchasedFlight> PurchasedFlights { get; set; }
-        public virtual ICollection<DreamFlight> DreamFlights { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; }
         
     }
 }

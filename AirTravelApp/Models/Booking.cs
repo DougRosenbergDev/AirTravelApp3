@@ -1,4 +1,5 @@
 ﻿using AirTravelApp.DTO;
+using System.Text.Json.Serialization;
 
 namespace AirTravelApp.Models
 {
@@ -8,20 +9,11 @@ namespace AirTravelApp.Models
         public int ConfirmationNumber { get; set; }
         public int FlightId { get; set; }
         public int PassengerId { get; set; }
+        [JsonIgnore]
+        public virtual Flight Flight { get; set; }
+        [JsonIgnore]
+        public virtual Passenger Passenger { get; set; }
 
-        // error fixing
-        
-
-        // Not stored property
-        public int PassengerCount => Purchasers?.Count ?? 0;
-        public int DreamFlightCount => Dreams?.Count ?? 0;
-
-        // Navigation Properties
-        public virtual ICollection<BookedFlight> Flights { get; set; }
-
-        public virtual ICollection<PurchasedFlight> Purchasers { get; set; }
-
-        public virtual ICollection<DreamFlight> Dreams { get; set; }
 
         public Booking() { }
 
@@ -29,9 +21,7 @@ namespace AirTravelApp.Models
             this.ConfirmationNumber = dto.ConfirmationNumber;
             this.FlightId = dto.FlightId;
             this.PassengerId = dto.PassengerId;
-            this.Flights = new List<BookedFlight>();
-            this.Purchasers = new List<PurchasedFlight>();
-            this.Dreams = new List<DreamFlight>();
+            
         }
 
     }
