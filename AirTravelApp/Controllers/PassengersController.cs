@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AirTravelApp.Data;
 using AirTravelApp.Models;
@@ -17,7 +12,6 @@ namespace AirTravelApp.Controllers
     {
         private readonly FlightDbContext _context;
         private readonly ILogger<PassengersController> _logger;
-
 
         public PassengersController(ILogger<PassengersController> logger, FlightDbContext context)
         {
@@ -50,6 +44,22 @@ namespace AirTravelApp.Controllers
             {
                 return NotFound();
             }
+            var bookings = await _context.Flights.Where(f => f.Bookings.Where(b => b.BookingId == booking.Id).Any()).ToListAsync();
+            var passengerDTO = new PassengerDetailsDTO;
+            {
+                Id = passenger.Id,
+                FirstName = passenger.FirstName,
+                LastName = passenger.LastName,
+                Email = passenger.Email,
+                Job = passenger.Job,
+                Age = passenger.Age,
+                
+
+                passengers = bookings
+
+            };
+
+            return Ok(flightDTO);
 
             return passenger;
         }
